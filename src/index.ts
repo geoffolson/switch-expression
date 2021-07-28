@@ -1,33 +1,46 @@
-interface Case {
-  value: any;
-  callBack: Function;
+interface Switch {
+  case(value: any, callBack: Function): Switch;
+  default(callBack: Function): any;
+  run(): any;
 }
-class SwitchExpression {
-  protected value: any;
-  protected cases: Case[];
-  protected defaultCase: Function;
 
-  constructor(value: any) {
-    this.cases = [];
-    this.value = value;
-    this.defaultCase = () => null;
+class MatchedCase implements Switch {
+  private readonly callBack: Function;
+
+  constructor(callBack: Function) {
+    this.callBack = callBack;
   }
 
-  case(value: any, callBack: Function): SwitchExpression {
-    this.cases = [...this.cases, { value, callBack }];
+  case(value: any, callBack: Function) {
     return this;
   }
 
   default(callBack: Function) {
-    this.defaultCase = callBack;
-    return this.run();
+    return this.callBack();
   }
 
   run() {
-    for (const { value, callBack } of this.cases) {
-      if (value === this.value) return callBack();
-    }
-    return this.defaultCase();
+    return this.callBack();
+  }
+}
+
+class SwitchExpression implements Switch {
+  private readonly value: any;
+
+  constructor(value: any) {
+    this.value = value;
+  }
+
+  case(value: any, callBack: Function): Switch {
+    return value === this.value ? new MatchedCase(callBack) : this;
+  }
+
+  default(callBack: Function): any {
+    return callBack();
+  }
+
+  run() {
+    return null;
   }
 }
 
