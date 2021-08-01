@@ -16,19 +16,19 @@ Switch("hello")
 //   "Found no match"
 Switch("hEll0")
   .case(0, () => "case 0")
-  .case("test", () => "case test")
+  .case("test", () => <p>case test</p>)
   .case("hello", () => "Hello World!")
   .default(() => "Found no match")
 
-// When no match is found the run method will return null
-const result3 = Switch("hEll0")
+// returns <p>case test</p>
+Switch("test")
   .case(0, () => <p>case 0</p>)
   .case("test", () => <p>case test</p>)
   .case("hello", () => <p>Hello World!</p>)
   .run()
 
-// returns <p>case test</p>
-const result4 = Switch("test")
+// When no match is found the run method will return null
+Switch("hEll0")
   .case(0, () => <p>case 0</p>)
   .case("test", () => <p>case test</p>)
   .case("hello", () => <p>Hello World!</p>)
