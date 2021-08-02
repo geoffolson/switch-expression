@@ -1,21 +1,21 @@
-interface Switch {
-  case(value: any, callBack: Function): Switch;
-  default(callBack: Function): any;
-  run(): any;
+interface Switch<A, B> {
+  case(value: A, callBack: () => B): Switch<A, B>;
+  default(callBack: () => B): B;
+  run(): B | null;
 }
 
-class MatchedCase implements Switch {
-  private readonly callBack: Function;
+class MatchedCase<A, B> implements Switch<A, B> {
+  private readonly callBack: () => B;
 
-  constructor(callBack: Function) {
+  constructor(callBack: () => B) {
     this.callBack = callBack;
   }
 
-  case(value: any, callBack: Function) {
+  case(value: A, callBack: () => B) {
     return this;
   }
 
-  default(callBack: Function) {
+  default(callBack: () => B) {
     return this.callBack();
   }
 
@@ -24,18 +24,18 @@ class MatchedCase implements Switch {
   }
 }
 
-class SwitchExpression implements Switch {
-  private readonly value: any;
+class SwitchExpression<A, B> implements Switch<A, B> {
+  private readonly value: A;
 
-  constructor(value: any) {
+  constructor(value: A) {
     this.value = value;
   }
 
-  case(value: any, callBack: Function): Switch {
+  case(value: A, callBack: () => B): Switch<A, B> {
     return value === this.value ? new MatchedCase(callBack) : this;
   }
 
-  default(callBack: Function): any {
+  default(callBack: () => B): B {
     return callBack();
   }
 
@@ -44,4 +44,6 @@ class SwitchExpression implements Switch {
   }
 }
 
-export const Switch = (value: any) => new SwitchExpression(value);
+export function Switch<A, B>(value: A) {
+  return new SwitchExpression(value);
+}
