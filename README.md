@@ -16,21 +16,21 @@ Switch<string, string>("hello")
 
 // When no match is found the default case is returned:
 //   "Found no match"
-Switch("hEll0")
+Switch<string | number, React.ReactNode>("hEll0")
   .case(0, () => "case 0")
   .case("test", () => <p>case test</p>)
   .case("hello", () => "Hello World!")
   .default(() => "Found no match");
 
 // returns <p>case test</p>
-Switch("test")
+Switch<string | number, React.ReactNode>("test")
   .case(0, () => <p>case 0</p>)
   .case("test", () => <p>case test</p>)
   .case("hello", () => <p>Hello World!</p>)
   .run();
 
 // When no match is found the run method will return null
-Switch("hEll0")
+Switch<string | number, React.ReactNode>("hEll0")
   .case(0, () => <p>case 0</p>)
   .case("test", () => <p>case test</p>)
   .case("hello", () => <p>Hello World!</p>)
