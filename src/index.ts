@@ -45,5 +45,5 @@ class SwitchExpression<A, B> implements Switch<A, B> {
 }
 
 export function Switch<A, B>(value: A) {
-  return new SwitchExpression(value);
+  return new SwitchExpression<A, B>(value);
 }
