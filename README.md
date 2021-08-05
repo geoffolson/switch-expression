@@ -6,6 +6,8 @@ A simple function providing similar functionality to a switch statement using me
 
 ```typescript
 import { Swtich } from "switch-expression";
+// or if using commonjs:
+// const { Switch } = require("switch-expression")
 
 // returns "Hello World"
 Switch<string, string>("hello")

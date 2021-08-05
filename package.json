@@ -1,6 +1,6 @@
 {
   "name": "switch-expression",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "license": "MIT",
   "keywords": [],
   "main": "dist/index.js",
